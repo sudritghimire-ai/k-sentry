@@ -98,7 +98,6 @@ proof fn lemma_take_push_last(s: Seq<u64>, k: int)
         s.take(k) == s.take(k - 1).push(s[k - 1])
 {}
 
-// ✅ FIXED: use int index (spec indexing expects int)
 #[verifier(external_body)]
 proof fn lemma_vec_read_matches_view(v: &Vec<u64>, i: int, x: u64)
     requires
@@ -230,8 +229,7 @@ impl KSentry {
                 i <= n,
                 n == logs_seq.len(),
                 n == logs.view().len(),
-                        logs_seq == logs.view(),   // ✅ ADD THIS LINE
-
+                        logs_seq == logs.view(),
                 n <= 31,
                 self.p == old(self).p,
                 self.q == old(self).q,
@@ -250,7 +248,6 @@ impl KSentry {
             proof {
                 saved_old_i = i as int;
 
-                // ✅ FIXED CALL: pass int index, not usize
                 lemma_vec_read_matches_view(&logs, saved_old_i, li);
                 assert(li == logs.view()[saved_old_i]);
 
