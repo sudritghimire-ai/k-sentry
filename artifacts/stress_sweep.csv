@@ -1,0 +1,4 @@
+stress_iterations,duration_ms,kept_events,filtered_events,ringbuf_drop_events,final_digest,report_path
+500,2117.0273,30,405,not_measured,558645793,/home/sudri/k-sentry/artifacts/stress_sweep_N500_report.txt
+1000,3518.1279,28,635,not_measured,480646805,/home/sudri/k-sentry/artifacts/stress_sweep_N1000_report.txt
+2000,8661.0079,30,436,not_measured,570798470,/home/sudri/k-sentry/artifacts/stress_sweep_N2000_report.txt

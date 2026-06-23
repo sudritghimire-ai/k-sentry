@@ -1,0 +1,22 @@
+TimeFence eBPF live K-Sentry report
+===================================
+source=eBPF ringbuf
+tracepoint=syscalls:sys_enter_execve
+core=timefence-core path dependency
+accumulator=K-Sentry triangular O(1) updater
+events_seen=20
+final_digest=99417838
+
+First events:
+- pid=28428 uid=1000 ts=1661382210035 comm=Relay x=701831344 digest_after=701831344
+- pid=28429 uid=1000 ts=1661384665076 comm=bash x=635371299 digest_after=149430402
+- pid=28430 uid=1000 ts=1661386496388 comm=bash x=34530491 digest_after=993388738
+- pid=28433 uid=1000 ts=1661394998010 comm=bash x=729263361 digest_after=97946441
+- pid=28434 uid=1000 ts=1661396791760 comm=bash x=670775196 digest_after=284728522
+
+Last events:
+- pid=28459 uid=1000 ts=1674067634473 comm=bash x=275303873 digest_after=982621399
+- pid=28460 uid=1000 ts=1674069452927 comm=bash x=469192301 digest_after=362903230
+- pid=28461 uid=1000 ts=1674070212319 comm=lesspipe x=747094066 digest_after=518382949
+- pid=28463 uid=1000 ts=1674071705922 comm=lesspipe x=711798783 digest_after=7916222
+- pid=28464 uid=1000 ts=1674073478760 comm=bash x=903434844 digest_after=99417838

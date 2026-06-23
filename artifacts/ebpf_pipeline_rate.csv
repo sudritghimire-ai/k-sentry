@@ -1,0 +1,4 @@
+stress_iterations,stress_duration_ms,kept_events,filtered_events,total_observed_events,observed_events_per_sec,kept_events_per_sec,ringbuf_drop_events,final_digest,log_path
+500,2218.4054,50,1045,1095,493.60,22.54,not_measured,487275509,/home/sudri/k-sentry/artifacts/ebpf_pipeline_rate_N500_collector.log
+1000,4256.4116,68,1627,1695,398.22,15.98,not_measured,738867668,/home/sudri/k-sentry/artifacts/ebpf_pipeline_rate_N1000_collector.log
+2000,9366.3985,117,2479,2596,277.16,12.49,not_measured,85890246,/home/sudri/k-sentry/artifacts/ebpf_pipeline_rate_N2000_collector.log

@@ -1,0 +1,11 @@
+mode,run,iterations,duration_ms
+no_collector,1,3000,7354.4172
+no_collector,2,3000,7356.7777
+no_collector,3,3000,6220.7480
+no_collector,4,3000,6929.7111
+no_collector,5,3000,7110.5994
+with_ebpf_collector,1,3000,6909.1538
+with_ebpf_collector,2,3000,6071.1355
+with_ebpf_collector,3,3000,7018.6148
+with_ebpf_collector,4,3000,7317.2385
+with_ebpf_collector,5,3000,7113.7805

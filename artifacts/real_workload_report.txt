@@ -1,0 +1,43 @@
+TimeFence real workload experiment report
+=========================================
+workload=python_http_server_plus_file_reads_plus_curl
+duration_ms=1474.0549
+source=eBPF ringbuf
+tracepoints=execve,openat,connect
+kept_events=24
+skipped_events=648
+final_digest=795125924
+
+Workload actions:
+- created /tmp/timefence_real_workload/secret.txt
+- started python3 -m http.server
+- read local files
+- curled localhost server
+- curled example.com
+
+Raw collector report:
+---------------------
+TimeFence eBPF filtered K-Sentry report
+=======================================
+source=eBPF ringbuf
+tracepoints=syscalls:sys_enter_execve,syscalls:sys_enter_openat,syscalls:sys_enter_connect
+filter=Exec(selected shell/tools) OR OpenFile(/tmp/timefence,/etc/hostname,/etc/passwd) OR Connect(any)
+core=timefence-core path dependency
+accumulator=K-Sentry triangular O(1) updater
+kept_events=24
+skipped_events=648
+final_digest=795125924
+
+First kept events:
+- type=Exec pid=603544 uid=1000 ts=2874554082995 comm=bash target=<empty> x=898166149 digest_after=898166149
+- type=Exec pid=603545 uid=1000 ts=2874555479548 comm=bash target=<empty> x=34718520 digest_after=141195782
+- type=Exec pid=603549 uid=1000 ts=2875571184262 comm=bash target=<empty> x=520167183 digest_after=558538305
+- type=OpenFile pid=603549 uid=1000 ts=2875571916885 comm=cat target=/tmp/timefence_real_workload/secret.txt x=605589588 digest_after=567478188
+- type=Exec pid=603550 uid=1000 ts=2875572411685 comm=bash target=<empty> x=462146158 digest_after=709107580
+
+Last kept events:
+- type=Connect pid=603628 uid=1000 ts=2905449336706 comm=bash target=socket_connect_non_ipv4 x=834091283 digest_after=4650648
+- type=Connect pid=603628 uid=1000 ts=2905449353195 comm=bash target=socket_connect_non_ipv4 x=166539212 digest_after=487158831
+- type=OpenFile pid=603628 uid=1000 ts=2905449388424 comm=bash target=/etc/passwd x=475007053 digest_after=622099577
+- type=Exec pid=603629 uid=1000 ts=2905450420655 comm=bash target=<empty> x=872448035 digest_after=631029119
+- type=Exec pid=603630 uid=1000 ts=2905452516469 comm=bash target=<empty> x=404546041 digest_after=795125924

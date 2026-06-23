@@ -1,0 +1,4 @@
+mode,runs,mean_duration_ms,stddev_duration_ms
+no_collector,5,6994.4507,468.2826
+with_ebpf_collector,5,6885.9846,479.5773
+overhead_percent,,-1.5507,

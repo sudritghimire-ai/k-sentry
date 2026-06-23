@@ -1,0 +1,24 @@
+TimeFence eBPF filtered K-Sentry report
+=======================================
+source=eBPF ringbuf
+tracepoints=syscalls:sys_enter_execve,syscalls:sys_enter_openat,syscalls:sys_enter_connect
+filter=Exec(selected shell/tools) OR OpenFile(/tmp/timefence,/etc/hostname,/etc/passwd) OR Connect(any)
+core=timefence-core path dependency
+accumulator=K-Sentry triangular O(1) updater
+kept_events=120
+skipped_events=2293
+final_digest=980930368
+
+First kept events:
+- type=Exec pid=596316 uid=1000 ts=2061632188748 comm=bash target=<empty> x=666796079 digest_after=666796079
+- type=Exec pid=596317 uid=1000 ts=2061633578928 comm=bash target=<empty> x=357392034 digest_after=168540296
+- type=Exec pid=596347 uid=1000 ts=2061676571079 comm=bash target=<empty> x=277333129 digest_after=293802878
+- type=OpenFile pid=596347 uid=1000 ts=2061677128634 comm=cat target=/etc/hostname x=781793192 digest_after=480404647
+- type=Exec pid=596348 uid=1000 ts=2061677529489 comm=bash target=<empty> x=771466417 digest_after=192176311
+
+Last kept events:
+- type=OpenFile pid=601759 uid=1000 ts=2069673621523 comm=cat target=/tmp/timefence_live.txt x=615175406 digest_after=954084285
+- type=Exec pid=601868 uid=1000 ts=2069808670256 comm=bash target=<empty> x=185797410 digest_after=644068603
+- type=Exec pid=601948 uid=1000 ts=2069909327837 comm=bash target=<empty> x=892527945 digest_after=87584418
+- type=Exec pid=602031 uid=1000 ts=2070009148243 comm=bash target=<empty> x=442901662 digest_after=900163129
+- type=OpenFile pid=602061 uid=1000 ts=2070109226957 comm=cat target=/tmp/timefence_live.txt x=815147478 digest_after=980930368

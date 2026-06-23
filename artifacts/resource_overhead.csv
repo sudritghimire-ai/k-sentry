@@ -1,0 +1,11 @@
+mode,run,iterations,elapsed_sec,user_sec,sys_sec,cpu_percent,max_rss_kb
+no_collector,1,5000,11.21,2.34,3.65,53,3584
+no_collector,2,5000,10.58,2.18,3.71,55,3584
+no_collector,3,5000,10.93,2.10,3.49,51,3584
+no_collector,4,5000,10.96,1.97,3.56,50,3584
+no_collector,5,5000,10.32,2.12,3.52,54,3584
+with_ebpf_collector,1,5000,10.97,2.11,3.46,50,3584
+with_ebpf_collector,2,5000,11.24,2.22,3.61,51,3584
+with_ebpf_collector,3,5000,10.51,2.16,3.57,54,3584
+with_ebpf_collector,4,5000,11.39,2.32,3.79,53,3584
+with_ebpf_collector,5,5000,10.3,2.14,3.56,55,3584

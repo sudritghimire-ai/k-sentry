@@ -1,0 +1,716 @@
+=== TimeFence eBPF ringbuf v5: exec/openat/connect + K-Sentry ===
+Attached to:
+  syscalls:sys_enter_execve
+  syscalls:sys_enter_openat
+  syscalls:sys_enter_connect
+
+Open another WSL terminal and run:
+  echo secret-token >/tmp/timefence_live.txt
+  cat /tmp/timefence_live.txt
+  cat /etc/hostname
+  curl -I http://example.com
+
+Listening. The program stops after 5000 kept events.
+
+Exec kept: pid=835222 uid=1000 ts=5911445164046 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835222:uid=1000:comm=bash
+  field element x=154963901
+  live checkpoint: kept_events=1 digest=154963901
+  filtered_events=3
+
+OpenFile kept: pid=835265 uid=1000 ts=5911515966640 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=369635091
+  live checkpoint: kept_events=2 digest=742409524
+  filtered_events=123
+
+Exec kept: pid=835266 uid=1000 ts=5911516633679 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835266:uid=1000:comm=bash
+  field element x=712278443
+  live checkpoint: kept_events=3 digest=53913758
+  filtered_events=125
+
+OpenFile kept: pid=835266 uid=1000 ts=5911517386314 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=243068163
+  live checkpoint: kept_events=4 digest=780022373
+  filtered_events=155
+
+Exec kept: pid=835267 uid=1000 ts=5911517934226 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835267:uid=1000:comm=bash
+  field element x=854219468
+  live checkpoint: kept_events=5 digest=14898913
+  filtered_events=157
+
+OpenFile kept: pid=835335 uid=1000 ts=5911616454585 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=251927415
+  live checkpoint: kept_events=6 digest=165453591
+  filtered_events=214
+
+Exec kept: pid=835336 uid=1000 ts=5911616884191 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835336:uid=1000:comm=bash
+  field element x=112748566
+  live checkpoint: kept_events=7 digest=66876312
+  filtered_events=216
+
+Exec kept: pid=835337 uid=1000 ts=5911618362279 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835337:uid=1000:comm=bash
+  field element x=381727016
+  live checkpoint: kept_events=8 digest=58782116
+  filtered_events=250
+
+Exec kept: pid=835409 uid=1000 ts=5911716992951 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835409:uid=1000:comm=bash
+  field element x=745747719
+  live checkpoint: kept_events=9 digest=169513193
+  filtered_events=287
+
+OpenFile kept: pid=835409 uid=1000 ts=5911717646846 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=583164055
+  live checkpoint: kept_events=10 digest=1300209
+  filtered_events=317
+
+Exec kept: pid=835410 uid=1000 ts=5911718099734 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835410:uid=1000:comm=bash
+  field element x=807129970
+  live checkpoint: kept_events=11 digest=754113500
+  filtered_events=319
+
+OpenFile kept: pid=835410 uid=1000 ts=5911718679885 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=627883883
+  live checkpoint: kept_events=12 digest=849830695
+  filtered_events=349
+
+Exec kept: pid=835411 uid=1000 ts=5911719200556 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835411:uid=1000:comm=bash
+  field element x=37828484
+  live checkpoint: kept_events=13 digest=582759055
+  filtered_events=351
+
+Exec kept: pid=835484 uid=1000 ts=5911816649848 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835484:uid=1000:comm=bash
+  field element x=71175449
+  live checkpoint: kept_events=14 digest=514421875
+  filtered_events=375
+
+OpenFile kept: pid=835484 uid=1000 ts=5911817297813 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=980385528
+  live checkpoint: kept_events=15 digest=655590852
+  filtered_events=405
+
+Exec kept: pid=835485 uid=1000 ts=5911817863682 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835485:uid=1000:comm=bash
+  field element x=557544329
+  live checkpoint: kept_events=16 digest=588835761
+  filtered_events=407
+
+OpenFile kept: pid=835485 uid=1000 ts=5911818790861 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=52457165
+  live checkpoint: kept_events=17 digest=404572604
+  filtered_events=437
+
+Exec kept: pid=835486 uid=1000 ts=5911819268006 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835486:uid=1000:comm=bash
+  field element x=112305525
+  live checkpoint: kept_events=18 digest=202763550
+  filtered_events=439
+
+Exec kept: pid=835528 uid=1000 ts=5911934565253 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835528:uid=1000:comm=bash
+  field element x=302109245
+  live checkpoint: kept_events=19 digest=456660681
+  filtered_events=463
+
+OpenFile kept: pid=835528 uid=1000 ts=5911935666301 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=175833991
+  live checkpoint: kept_events=20 digest=443408850
+  filtered_events=493
+
+Exec kept: pid=835529 uid=1000 ts=5911936172934 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835529:uid=1000:comm=bash
+  field element x=63551444
+  live checkpoint: kept_events=21 digest=911985104
+  filtered_events=495
+
+OpenFile kept: pid=835529 uid=1000 ts=5911936856893 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=585034187
+  live checkpoint: kept_events=22 digest=785614266
+  filtered_events=525
+
+Exec kept: pid=835530 uid=1000 ts=5911937340964 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835530:uid=1000:comm=bash
+  field element x=84875159
+  live checkpoint: kept_events=23 digest=158652459
+  filtered_events=527
+
+OpenFile kept: pid=835588 uid=1000 ts=5912017096992 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=277966578
+  live checkpoint: kept_events=24 digest=67497709
+  filtered_events=577
+
+Exec kept: pid=835589 uid=1000 ts=5912017612019 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835589:uid=1000:comm=bash
+  field element x=974435651
+  live checkpoint: kept_events=25 digest=575865526
+  filtered_events=579
+
+OpenFile kept: pid=835589 uid=1000 ts=5912018643027 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=668411300
+  live checkpoint: kept_events=26 digest=324923872
+  filtered_events=609
+
+Exec kept: pid=835590 uid=1000 ts=5912019068293 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835590:uid=1000:comm=bash
+  field element x=764265722
+  live checkpoint: kept_events=27 digest=666313300
+  filtered_events=611
+
+Exec kept: pid=835667 uid=1000 ts=5912117236627 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835667:uid=1000:comm=bash
+  field element x=962371988
+  live checkpoint: kept_events=28 digest=590031435
+  filtered_events=644
+
+OpenFile kept: pid=835667 uid=1000 ts=5912117828250 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=472827206
+  live checkpoint: kept_events=29 digest=496975897
+  filtered_events=674
+
+Exec kept: pid=835668 uid=1000 ts=5912118356759 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835668:uid=1000:comm=bash
+  field element x=475140453
+  live checkpoint: kept_events=30 digest=410614007
+  filtered_events=676
+
+Exec kept: pid=835669 uid=1000 ts=5912120005247 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835669:uid=1000:comm=bash
+  field element x=375696634
+  live checkpoint: kept_events=31 digest=820661028
+  filtered_events=710
+
+OpenFile kept: pid=835742 uid=1000 ts=5912217441899 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=773957799
+  live checkpoint: kept_events=32 digest=754500907
+  filtered_events=755
+
+Exec kept: pid=835743 uid=1000 ts=5912218154014 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835743:uid=1000:comm=bash
+  field element x=413446136
+  live checkpoint: kept_events=33 digest=592420663
+  filtered_events=757
+
+Exec kept: pid=835821 uid=1000 ts=5912317875062 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835821:uid=1000:comm=bash
+  field element x=529229448
+  live checkpoint: kept_events=34 digest=673548994
+  filtered_events=768
+
+Exec kept: pid=835852 uid=1000 ts=5912417762749 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835852:uid=1000:comm=bash
+  field element x=107563424
+  live checkpoint: kept_events=35 digest=524329286
+  filtered_events=802
+
+OpenFile kept: pid=835852 uid=1000 ts=5912418853546 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=66578581
+  live checkpoint: kept_events=36 digest=508701831
+  filtered_events=832
+
+Exec kept: pid=835853 uid=1000 ts=5912419283906 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835853:uid=1000:comm=bash
+  field element x=554894597
+  live checkpoint: kept_events=37 digest=944620492
+  filtered_events=834
+
+Exec kept: pid=835930 uid=1000 ts=5912517907888 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=835930:uid=1000:comm=bash
+  field element x=361814442
+  live checkpoint: kept_events=38 digest=861304982
+  filtered_events=845
+
+Exec kept: pid=836086 uid=1000 ts=5912718607722 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836086:uid=1000:comm=bash
+  field element x=731119452
+  live checkpoint: kept_events=39 digest=918685851
+  filtered_events=859
+
+OpenFile kept: pid=836086 uid=1000 ts=5912719548856 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=727509875
+  live checkpoint: kept_events=40 digest=294284053
+  filtered_events=889
+
+Exec kept: pid=836132 uid=1000 ts=5912833306071 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836132:uid=1000:comm=bash
+  field element x=258581199
+  live checkpoint: kept_events=41 digest=199257253
+  filtered_events=892
+
+Exec kept: pid=836202 uid=1000 ts=5912919406676 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836202:uid=1000:comm=bash
+  field element x=921818510
+  live checkpoint: kept_events=42 digest=856764923
+  filtered_events=922
+
+Exec kept: pid=836352 uid=1000 ts=5913119880641 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836352:uid=1000:comm=bash
+  field element x=232477925
+  live checkpoint: kept_events=43 digest=615508045
+  filtered_events=936
+
+Exec kept: pid=836426 uid=1000 ts=5913220421008 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836426:uid=1000:comm=bash
+  field element x=913376476
+  live checkpoint: kept_events=44 digest=449197699
+  filtered_events=950
+
+Exec kept: pid=836434 uid=1000 ts=5913359061020 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836434:uid=1000:comm=bash
+  field element x=321393974
+  live checkpoint: kept_events=45 digest=128389427
+  filtered_events=980
+
+Exec kept: pid=836479 uid=1000 ts=5913421068205 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836479:uid=1000:comm=bash
+  field element x=821750470
+  live checkpoint: kept_events=46 digest=113958580
+  filtered_events=983
+
+Exec kept: pid=836706 uid=1000 ts=5913721879692 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836706:uid=1000:comm=bash
+  field element x=525921224
+  live checkpoint: kept_events=47 digest=684711015
+  filtered_events=1043
+
+OpenFile kept: pid=836812 uid=1000 ts=5913924279501 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=308506131
+  live checkpoint: kept_events=48 digest=803784860
+  filtered_events=1105
+
+Exec kept: pid=836813 uid=1000 ts=5913924678912 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836813:uid=1000:comm=bash
+  field element x=311711606
+  live checkpoint: kept_events=49 digest=309132981
+  filtered_events=1107
+
+Exec kept: pid=836886 uid=1000 ts=5914024880521 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836886:uid=1000:comm=bash
+  field element x=59372362
+  live checkpoint: kept_events=50 digest=799132541
+  filtered_events=1168
+
+Exec kept: pid=836962 uid=1000 ts=5914123960110 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=836962:uid=1000:comm=bash
+  field element x=25108735
+  live checkpoint: kept_events=51 digest=543030201
+  filtered_events=1198
+
+OpenFile kept: pid=837146 uid=1000 ts=5914425016911 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=455917919
+  live checkpoint: kept_events=52 digest=554959186
+  filtered_events=1321
+
+Exec kept: pid=837147 uid=1000 ts=5914425539510 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837147:uid=1000:comm=bash
+  field element x=761608370
+  live checkpoint: kept_events=53 digest=947895735
+  filtered_events=1323
+
+OpenFile kept: pid=837147 uid=1000 ts=5914426414227 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=158413059
+  live checkpoint: kept_events=54 digest=21564705
+  filtered_events=1353
+
+Exec kept: pid=837148 uid=1000 ts=5914426895260 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837148:uid=1000:comm=bash
+  field element x=808947861
+  live checkpoint: kept_events=55 digest=851006756
+  filtered_events=1355
+
+Exec kept: pid=837224 uid=1000 ts=5914525446934 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837224:uid=1000:comm=bash
+  field element x=225721534
+  live checkpoint: kept_events=56 digest=339131368
+  filtered_events=1390
+
+Exec kept: pid=837340 uid=1000 ts=5914735857887 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837340:uid=1000:comm=bash
+  field element x=160014850
+  live checkpoint: kept_events=57 digest=965518173
+  filtered_events=1415
+
+OpenFile kept: pid=837479 uid=1000 ts=5914925574068 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=99817912
+  live checkpoint: kept_events=58 digest=721789097
+  filtered_events=1474
+
+Exec kept: pid=837480 uid=1000 ts=5914926112120 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837480:uid=1000:comm=bash
+  field element x=45676129
+  live checkpoint: kept_events=59 digest=183438426
+  filtered_events=1476
+
+OpenFile kept: pid=837553 uid=1000 ts=5915025560377 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=125160859
+  live checkpoint: kept_events=60 digest=701441580
+  filtered_events=1501
+
+Exec kept: pid=837554 uid=1000 ts=5915025986628 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837554:uid=1000:comm=bash
+  field element x=400020994
+  live checkpoint: kept_events=61 digest=122046784
+  filtered_events=1503
+
+OpenFile kept: pid=837628 uid=1000 ts=5915125842040 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=296230250
+  live checkpoint: kept_events=62 digest=401822264
+  filtered_events=1532
+
+Exec kept: pid=837629 uid=1000 ts=5915126416559 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837629:uid=1000:comm=bash
+  field element x=893737038
+  live checkpoint: kept_events=63 digest=351884613
+  filtered_events=1534
+
+Exec kept: pid=837665 uid=1000 ts=5915226169548 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837665:uid=1000:comm=bash
+  field element x=285555931
+  live checkpoint: kept_events=64 digest=897295941
+  filtered_events=1564
+
+Exec kept: pid=837740 uid=1000 ts=5915326247033 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837740:uid=1000:comm=bash
+  field element x=678645663
+  live checkpoint: kept_events=65 digest=458477498
+  filtered_events=1566
+
+Exec kept: pid=837817 uid=1000 ts=5915426412893 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837817:uid=1000:comm=bash
+  field element x=547838656
+  live checkpoint: kept_events=66 digest=780028916
+  filtered_events=1591
+
+Exec kept: pid=837944 uid=1000 ts=5915645596662 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=837944:uid=1000:comm=bash
+  field element x=653540958
+  live checkpoint: kept_events=67 digest=630077527
+  filtered_events=1623
+
+Exec kept: pid=838007 uid=1000 ts=5915727276290 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=838007:uid=1000:comm=bash
+  field element x=472041708
+  live checkpoint: kept_events=68 digest=305091368
+  filtered_events=1625
+
+Exec kept: pid=838157 uid=1000 ts=5915927190122 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=838157:uid=1000:comm=bash
+  field element x=252199740
+  live checkpoint: kept_events=69 digest=660989055
+  filtered_events=1657
+
+Exec kept: pid=838223 uid=1000 ts=5916028030205 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=838223:uid=1000:comm=bash
+  field element x=758039119
+  live checkpoint: kept_events=70 digest=469758395
+  filtered_events=1683
+
+Connect kept: pid=838244 uid=1000 ts=5916200453558 comm=curl target=104.20.23.154:80
+  telemetry: Connect:curl:104.20.23.154:80
+  field element x=868746365
+  live checkpoint: kept_events=71 digest=365913151
+  filtered_events=1714
+
+Connect kept: pid=838244 uid=1000 ts=5916200462823 comm=curl target=socket_connect_non_ipv4
+  telemetry: Connect:curl:socket_connect_non_ipv4
+  field element x=711864801
+  live checkpoint: kept_events=72 digest=424312026
+  filtered_events=1714
+
+Exec kept: pid=838246 uid=1000 ts=5916243206257 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=838246:uid=1000:comm=bash
+  field element x=191039202
+  live checkpoint: kept_events=73 digest=96791459
+  filtered_events=1716
+
+OpenFile kept: pid=838382 uid=1000 ts=5916430722212 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=823010024
+  live checkpoint: kept_events=74 digest=964792817
+  filtered_events=1803
+
+Exec kept: pid=838533 uid=1000 ts=5916631060285 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=838533:uid=1000:comm=bash
+  field element x=329884655
+  live checkpoint: kept_events=75 digest=997792227
+  filtered_events=1807
+
+Connect kept: pid=838546 uid=1000 ts=5916771005472 comm=curl target=104.20.23.154:80
+  telemetry: Connect:curl:104.20.23.154:80
+  field element x=139514643
+  live checkpoint: kept_events=76 digest=30854840
+  filtered_events=1808
+
+Connect kept: pid=838546 uid=1000 ts=5916771014553 comm=curl target=socket_connect_non_ipv4
+  telemetry: Connect:curl:socket_connect_non_ipv4
+  field element x=68282316
+  live checkpoint: kept_events=77 digest=422609173
+  filtered_events=1808
+
+Connect kept: pid=838546 uid=1000 ts=5916771016400 comm=curl target=172.66.147.243:80
+  telemetry: Connect:curl:172.66.147.243:80
+  field element x=130022645
+  live checkpoint: kept_events=78 digest=210831069
+  filtered_events=1808
+
+Connect kept: pid=838546 uid=1000 ts=5916771027430 comm=curl target=socket_connect_non_ipv4
+  telemetry: Connect:curl:socket_connect_non_ipv4
+  field element x=959775108
+  live checkpoint: kept_events=79 digest=964259618
+  filtered_events=1808
+
+Connect kept: pid=838546 uid=1000 ts=5916771035782 comm=curl target=socket_connect_non_ipv4
+  telemetry: Connect:curl:socket_connect_non_ipv4
+  field element x=82125848
+  live checkpoint: kept_events=80 digest=216375233
+  filtered_events=1808
+
+Connect kept: pid=838546 uid=1000 ts=5916771037311 comm=curl target=socket_connect_non_ipv4
+  telemetry: Connect:curl:socket_connect_non_ipv4
+  field element x=628700053
+  live checkpoint: kept_events=81 digest=996468565
+  filtered_events=1808
+
+Connect kept: pid=838546 uid=1000 ts=5916771141026 comm=curl target=104.20.23.154:80
+  telemetry: Connect:curl:104.20.23.154:80
+  field element x=601503116
+  live checkpoint: kept_events=82 digest=560770689
+  filtered_events=1808
+
+Exec kept: pid=838548 uid=1000 ts=5916814014690 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=838548:uid=1000:comm=bash
+  field element x=639297912
+  live checkpoint: kept_events=83 digest=586007020
+  filtered_events=1810
+
+OpenFile kept: pid=838548 uid=1000 ts=5916814761527 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=743065672
+  live checkpoint: kept_events=84 digest=300880926
+  filtered_events=1840
+
+Exec kept: pid=838549 uid=1000 ts=5916815217493 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=838549:uid=1000:comm=bash
+  field element x=794446059
+  live checkpoint: kept_events=85 digest=407503060
+  filtered_events=1842
+
+OpenFile kept: pid=838549 uid=1000 ts=5916815837867 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=963555039
+  live checkpoint: kept_events=86 digest=80476958
+  filtered_events=1872
+
+Exec kept: pid=838550 uid=1000 ts=5916816305930 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=838550:uid=1000:comm=bash
+  field element x=71926861
+  live checkpoint: kept_events=87 digest=345073374
+  filtered_events=1874
+
+Exec kept: pid=838565 uid=1000 ts=5916834550482 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=838565:uid=1000:comm=bash
+  field element x=829005382
+  live checkpoint: kept_events=88 digest=903433629
+  filtered_events=1885
+
+OpenFile kept: pid=839179 uid=1000 ts=5917736595408 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=193731324
+  live checkpoint: kept_events=89 digest=124079252
+  filtered_events=1926
+
+Exec kept: pid=839260 uid=1000 ts=5917836620347 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=839260:uid=1000:comm=bash
+  field element x=907061919
+  live checkpoint: kept_events=90 digest=625385628
+  filtered_events=1930
+
+Exec kept: pid=839336 uid=1000 ts=5917937241148 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=839336:uid=1000:comm=bash
+  field element x=277624981
+  live checkpoint: kept_events=91 digest=781711638
+  filtered_events=1932
+
+Exec kept: pid=839454 uid=1000 ts=5918146406069 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=839454:uid=1000:comm=bash
+  field element x=165781216
+  live checkpoint: kept_events=92 digest=174893791
+  filtered_events=1965
+
+Exec kept: pid=839523 uid=1000 ts=5918237922694 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=839523:uid=1000:comm=bash
+  field element x=251637107
+  live checkpoint: kept_events=93 digest=700026537
+  filtered_events=1976
+
+OpenFile kept: pid=839523 uid=1000 ts=5918238555575 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=112893415
+  live checkpoint: kept_events=94 digest=750255102
+  filtered_events=2006
+
+Exec kept: pid=839524 uid=1000 ts=5918239077087 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=839524:uid=1000:comm=bash
+  field element x=721018699
+  live checkpoint: kept_events=95 digest=85500735
+  filtered_events=2008
+
+Exec kept: pid=839599 uid=1000 ts=5918338289326 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=839599:uid=1000:comm=bash
+  field element x=779983812
+  live checkpoint: kept_events=96 digest=536776414
+  filtered_events=2015
+
+Connect kept: pid=839754 uid=1000 ts=5918539203506 comm=curl target=socket_connect_non_ipv4
+  telemetry: Connect:curl:socket_connect_non_ipv4
+  field element x=712988125
+  live checkpoint: kept_events=97 digest=178817827
+  filtered_events=2052
+
+Connect kept: pid=839754 uid=1000 ts=5918539224900 comm=curl target=socket_connect_non_ipv4
+  telemetry: Connect:curl:socket_connect_non_ipv4
+  field element x=171109358
+  live checkpoint: kept_events=98 digest=365531756
+  filtered_events=2052
+
+Exec kept: pid=839870 uid=1000 ts=5918739066353 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=839870:uid=1000:comm=bash
+  field element x=578045989
+  live checkpoint: kept_events=99 digest=897364900
+  filtered_events=2066
+
+Exec kept: pid=840067 uid=1000 ts=5919040870156 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840067:uid=1000:comm=bash
+  field element x=282495415
+  live checkpoint: kept_events=100 digest=967907314
+  filtered_events=2137
+
+Exec kept: pid=840220 uid=1000 ts=5919240869327 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840220:uid=1000:comm=bash
+  field element x=44299994
+  live checkpoint: kept_events=101 digest=890404574
+  filtered_events=2145
+
+OpenFile kept: pid=840296 uid=1000 ts=5919340838099 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=138327709
+  live checkpoint: kept_events=102 digest=791856549
+  filtered_events=2187
+
+Exec kept: pid=840297 uid=1000 ts=5919341253936 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840297:uid=1000:comm=bash
+  field element x=468979441
+  live checkpoint: kept_events=103 digest=111231386
+  filtered_events=2189
+
+Exec kept: pid=840298 uid=1000 ts=5919342690426 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840298:uid=1000:comm=bash
+  field element x=467677502
+  live checkpoint: kept_events=104 digest=212747299
+  filtered_events=2223
+
+Exec kept: pid=840360 uid=1000 ts=5919479414044 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840360:uid=1000:comm=bash
+  field element x=756179882
+  live checkpoint: kept_events=105 digest=46852169
+  filtered_events=2228
+
+Exec kept: pid=840408 uid=1000 ts=5919541213949 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840408:uid=1000:comm=bash
+  field element x=601706472
+  live checkpoint: kept_events=106 digest=552658557
+  filtered_events=2236
+
+OpenFile kept: pid=840408 uid=1000 ts=5919542185986 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=570119284
+  live checkpoint: kept_events=107 digest=628739887
+  filtered_events=2266
+
+Exec kept: pid=840409 uid=1000 ts=5919542772294 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840409:uid=1000:comm=bash
+  field element x=21031564
+  live checkpoint: kept_events=108 digest=945164222
+  filtered_events=2268
+
+OpenFile kept: pid=840561 uid=1000 ts=5919741386528 comm=cat target=/tmp/timefence_live.txt
+  telemetry: OpenFile:cat:/tmp/timefence_live.txt
+  field element x=423456080
+  live checkpoint: kept_events=109 digest=361351856
+  filtered_events=2305
+
+Exec kept: pid=840562 uid=1000 ts=5919741793154 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840562:uid=1000:comm=bash
+  field element x=855157710
+  live checkpoint: kept_events=110 digest=267910151
+  filtered_events=2307
+
+Exec kept: pid=840751 uid=1000 ts=5920042045787 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840751:uid=1000:comm=bash
+  field element x=821361856
+  live checkpoint: kept_events=111 digest=943430025
+  filtered_events=2327
+
+Exec kept: pid=840828 uid=1000 ts=5920141969804 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840828:uid=1000:comm=bash
+  field element x=725429978
+  live checkpoint: kept_events=112 digest=401705133
+  filtered_events=2357
+
+Exec kept: pid=840906 uid=1000 ts=5920242147294 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840906:uid=1000:comm=bash
+  field element x=899797861
+  live checkpoint: kept_events=113 digest=608283618
+  filtered_events=2359
+
+OpenFile kept: pid=840906 uid=1000 ts=5920242727467 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=545967616
+  live checkpoint: kept_events=114 digest=234595024
+  filtered_events=2389
+
+Exec kept: pid=840907 uid=1000 ts=5920243133078 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840907:uid=1000:comm=bash
+  field element x=870225113
+  live checkpoint: kept_events=115 digest=76127433
+  filtered_events=2391
+
+Exec kept: pid=840964 uid=1000 ts=5920372433843 comm=bash target=<empty>
+  telemetry: Exec:bash:exec:pid=840964:uid=1000:comm=bash
+  field element x=648744053
+  live checkpoint: kept_events=116 digest=267166466
+  filtered_events=2394
+
+OpenFile kept: pid=841250 uid=1000 ts=5920743528550 comm=cat target=/etc/hostname
+  telemetry: OpenFile:cat:/etc/hostname
+  field element x=175555146
+  live checkpoint: kept_events=117 digest=85890246
+  filtered_events=2479
+

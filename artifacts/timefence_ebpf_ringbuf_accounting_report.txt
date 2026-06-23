@@ -1,0 +1,25 @@
+TimeFence eBPF filtered K-Sentry report
+=======================================
+source=eBPF ringbuf
+tracepoints=syscalls:sys_enter_execve,syscalls:sys_enter_openat,syscalls:sys_enter_connect
+filter=Exec(selected shell/tools) OR OpenFile(/tmp/timefence,/etc/hostname,/etc/passwd) OR Connect(any)
+core=timefence-core path dependency
+accumulator=K-Sentry triangular O(1) updater
+kept_events=100
+filtered_events=218
+ringbuf_output_failures=not_available_map_not_found
+final_digest=619597705
+
+First kept events:
+- type=Exec pid=932642 uid=1000 ts=8334703379457 comm=bash target=<empty> x=273342568 digest_after=273342568
+- type=Exec pid=932643 uid=1000 ts=8334705201338 comm=bash target=<empty> x=77150594 digest_after=813396726
+- type=Exec pid=932644 uid=1000 ts=8334711169148 comm=bash target=<empty> x=597686171 digest_after=819751944
+- type=OpenFile pid=932646 uid=1000 ts=8334811321290 comm=cp target=/tmp/timefence_build_workload/timefence-core/target/release/deps/timefence_core-28637133a6df6236.d x=299841277 digest_after=845902785
+- type=OpenFile pid=932646 uid=1000 ts=8334811562413 comm=cp target=/tmp/timefence_build_workload/timefence-core/target/release/deps/libtimefence_core-c8f00eda397e277a.rlib x=201331409 digest_after=336600646
+
+Last kept events:
+- type=OpenFile pid=932772 uid=1000 ts=8336762721263 comm=rustc target=/tmp/timefence_build_workload/timefence-core/target/debug/deps/libhybrid_array-4f4e51f971f130fc.rmeta x=269025014 digest_after=926893009
+- type=OpenFile pid=932839 uid=1000 ts=8336852512207 comm=build-script-bu target=/tmp/timefence_build_workload/timefence-core/target/debug/glibc-hwcaps/x86-64-v4/libgcc_s.so.1 x=228287957 digest_after=195407333
+- type=OpenFile pid=932839 uid=1000 ts=8336852547416 comm=build-script-bu target=/tmp/timefence_build_workload/timefence-core/target/debug/deps/glibc-hwcaps/x86-64-v2/libgcc_s.so.1 x=515619219 digest_after=311278136
+- type=OpenFile pid=932848 uid=1000 ts=8336953321474 comm=as target=/tmp/timefence_build_workload/timefence-core/target/debug/libz.so.1 x=755089516 digest_after=533117408
+- type=OpenFile pid=932848 uid=1000 ts=8336953329083 comm=as target=/tmp/timefence_build_workload/timefence-core/target/debug/deps/libz.so.1 x=95862785 digest_after=619597705

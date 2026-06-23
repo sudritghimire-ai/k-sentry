@@ -1,0 +1,17 @@
+[package]
+name = "timefence-epbf-ebpf"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+timefence_epbf_common = { package = "timefence-epbf-common", path = "../timefence_epbf_common" }
+
+aya-ebpf = { workspace = true }
+aya-log-ebpf = { workspace = true }
+
+[build-dependencies]
+which = { workspace = true }
+
+[[bin]]
+name = "timefence-epbf"
+path = "src/main.rs"

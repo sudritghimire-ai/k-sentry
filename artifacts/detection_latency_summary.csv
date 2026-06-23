@@ -1,0 +1,4 @@
+case,runs,mean_duration_ms,min_duration_ms,max_duration_ms,stddev_duration_ms
+clean_vs_clean,10,348.4491,340.0084,358.4097,6.5124
+clean_vs_extra_overwrite,10,348.4491,340.0084,358.4097,6.5124
+clean_vs_same_length_change,10,348.4491,340.0084,358.4097,6.5124

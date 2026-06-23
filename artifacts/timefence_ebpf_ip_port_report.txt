@@ -1,0 +1,24 @@
+TimeFence eBPF filtered K-Sentry report
+=======================================
+source=eBPF ringbuf
+tracepoints=syscalls:sys_enter_execve,syscalls:sys_enter_openat,syscalls:sys_enter_connect
+filter=Exec(selected shell/tools) OR OpenFile(/tmp/timefence,/etc/hostname,/etc/passwd) OR Connect(any)
+core=timefence-core path dependency
+accumulator=K-Sentry triangular O(1) updater
+kept_events=25
+skipped_events=251
+final_digest=982017058
+
+First kept events:
+- type=Exec pid=602773 uid=1000 ts=2523098725918 comm=bash target=<empty> x=422843530 digest_after=422843530
+- type=Connect pid=602773 uid=1000 ts=2523103219690 comm=curl target=socket_connect_non_ipv4 x=611298323 digest_after=701931763
+- type=Connect pid=602773 uid=1000 ts=2523103239624 comm=curl target=socket_connect_non_ipv4 x=792900899 digest_after=666938216
+- type=OpenFile pid=602773 uid=1000 ts=2523103270117 comm=curl target=/etc/passwd x=975034680 digest_after=521202552
+- type=Connect pid=602773 uid=1000 ts=2523103618607 comm=curl target=socket_connect_non_ipv4 x=388884143 digest_after=878328151
+
+Last kept events:
+- type=Connect pid=602775 uid=1000 ts=2523182687515 comm=curl target=socket_connect_non_ipv4 x=414079413 digest_after=231442447
+- type=Connect pid=602775 uid=1000 ts=2523182806410 comm=curl target=10.255.255.254:53 x=490578440 digest_after=435579763
+- type=Connect pid=602775 uid=1000 ts=2523188691454 comm=curl target=34.223.124.45:80 x=44479233 digest_after=703027569
+- type=Connect pid=602775 uid=1000 ts=2523188703205 comm=curl target=socket_connect_non_ipv4 x=291135136 digest_after=993831970
+- type=Connect pid=602775 uid=1000 ts=2523188772070 comm=curl target=34.223.124.45:80 x=445655922 digest_after=982017058
