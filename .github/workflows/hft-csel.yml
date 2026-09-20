@@ -1,0 +1,27 @@
+name: HFT carry-select attack
+on:
+  workflow_dispatch:
+  push:
+    paths: ['hft_csel_v7.sv','.github/workflows/hft-csel.yml']
+jobs:
+  synth:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        top: [packetfence17_csel_bench, hft_pair_csel_merged_bench]
+        freq: [400,450,500,550]
+        seed: [1,2,3,4,5]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+      - run: chmod +x synth_ecp5.sh
+      - name: P&R
+        continue-on-error: true
+        run: ./synth_ecp5.sh hft_csel_v7.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: csel-${{ matrix.top }}-${{ matrix.freq }}-${{ matrix.seed }}
+          path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
