@@ -1,0 +1,40 @@
+name: FPGA timing sweep
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'mersennefence_v2.sv'
+      - 'synth_ecp5.sh'
+      - '.github/workflows/synth.yml'
+jobs:
+  synth:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        top: [seq64_order_bench, mersenne_guard_bench, mersenne_guard_predecoded_bench, mersennefence_merged_bench]
+        freq: [200, 222, 250]
+        seed: [1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: chmod +x synth_ecp5.sh
+      - name: Synthesize and place-route
+        continue-on-error: true
+        run: ./synth_ecp5.sh mersennefence_v2.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+      - name: Summarize timing
+        if: always()
+        shell: bash
+        run: |
+          echo "### ${{ matrix.top }} @ ${{ matrix.freq }} MHz seed ${{ matrix.seed }}" >> "$GITHUB_STEP_SUMMARY"
+          D="build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}"
+          if [ -f "$D/nextpnr.log" ]; then
+            grep -E "Max frequency|Info: Max frequency|ERROR: Max frequency|timing" "$D/nextpnr.log" | tail -20 >> "$GITHUB_STEP_SUMMARY" || true
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: timing-${{ matrix.top }}-${{ matrix.freq }}-${{ matrix.seed }}
+          path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
