@@ -1,0 +1,36 @@
+name: HFT Mold v20 real test
+on:
+ workflow_dispatch:
+ push:
+  paths: ['hft_mold_v20.sv','tb_hft_mold_v20.sv','.github/workflows/hft-mold-v20.yml']
+jobs:
+ sim:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: iverilog -g2012 -o moldv20_sim hft_mold_v20.sv tb_hft_mold_v20.sv
+   - run: vvp moldv20_sim
+   - run: yosys -q -p "read_verilog -sv hft_mold_v20.sv; prep -top hft_mold_addorder20; check"
+ timing:
+  runs-on: ubuntu-latest
+  strategy:
+   fail-fast: false
+   matrix:
+    top: [hft_fields20_bench]
+    freq: [300,322,333,350,375,400]
+    seed: [1,2,3,4,5]
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: chmod +x synth_ecp5.sh
+   - name: P&R
+     continue-on-error: true
+     run: ./synth_ecp5.sh hft_mold_v20.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+   - uses: actions/upload-artifact@v4
+     if: always()
+     with:
+      name: moldv20-${{ matrix.freq }}-${{ matrix.seed }}
+      path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
