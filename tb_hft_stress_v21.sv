@@ -41,9 +41,9 @@ module tb_hft_stress_v21;
 
   task automatic seq_case(input [63:0] s,input [15:0] cnt,input logic sess,
                           input logic want_accept,input logic want_mis,input logic want_eos);
-    reg [63:0] before;
+    reg [63:0] prev_expected;
     begin
-      before=expected;
+      prev_expected=expected;
       @(negedge clk);
       rx_seq=s; msg_count=cnt; session_ok=sess; pkt_valid=1;
       @(posedge clk); #0.1;
@@ -53,8 +53,8 @@ module tb_hft_stress_v21;
         $fatal(1);
       end
       idle2();
-      if(!want_accept && expected!==before) begin
-        $display("REJECT ADVANCED STATE before=%h after=%h",before,expected);
+      if(!want_accept && expected!==prev_expected) begin
+        $display("REJECT ADVANCED STATE before=%h after=%h",prev_expected,expected);
         $fatal(1);
       end
     end
