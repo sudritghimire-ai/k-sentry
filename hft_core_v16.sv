@@ -99,7 +99,7 @@ module pf_allcsa_lane16(
   else begin
    if(packet_start)fresh<=1;
    if(valid)begin
-    if(fresh|pkt_start)begin s0<={{16{1'b0}},x};c0<=0;s1<=0;c1<=0;s2<=0;c2<=0;fresh<=0;end
+    if(fresh|packet_start)begin s0<={{16{1'b0}},x};c0<=0;s1<=0;c1<=0;s2<=0;c2<=0;fresh<=0;end
     else begin s0<=n_s0;c0<=n_c0;s1<=n_s1;c1<=n_c1;s2<=n_s2;c2<=n_c2;end
    end
   end
