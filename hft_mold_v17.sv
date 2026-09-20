@@ -28,9 +28,10 @@ module mold_seq_stream17(
  input logic hi_valid,input logic[47:0] rx_hi,
  input logic lo_valid,input logic[15:0] rx_lo,
  input logic[47:0] exp_hi,input logic[15:0] exp_lo,input logic gate_in,
- output logic accept,output logic packet_ok,output logic mismatch
+ output logic accept,output logic packet_ok,output logic mismatch,output logic decision_now
 );
  logic hi_bad,gate_q;
+ always_comb decision_now=lo_valid & gate_q & ~hi_bad & (rx_lo==exp_lo);
  always_ff @(posedge clk)begin
   if(rst)begin hi_bad<=0;gate_q<=0;accept<=0;packet_ok<=0;mismatch<=0;end
   else begin
@@ -38,8 +39,8 @@ module mold_seq_stream17(
    if(hi_valid)begin hi_bad<=rx_hi!=exp_hi;gate_q<=gate_in;packet_ok<=0;end
    if(lo_valid)begin
     mismatch<=hi_bad|(rx_lo!=exp_lo);
-    packet_ok<=gate_q&~hi_bad&(rx_lo==exp_lo);
-    accept<=gate_q&~hi_bad&(rx_lo==exp_lo);
+    packet_ok<=decision_now;
+    accept<=decision_now;
    end
   end
  end
@@ -101,11 +102,11 @@ module hft_mold_core_v17_17lane(
  output logic accept_fast,output logic mismatch,output logic slow_required,output logic status
 );
  (* keep *) logic[15:0] e0,e1,e2,e3;
- logic busy,conflict,ov,packet_ok,recovery;
+ logic busy,conflict,ov,packet_ok,recovery,seq_decision_now;
  logic gate_in;assign gate_in=session_ok&~busy&~recovery;
  mold_seq_stream17 q(.clk(clk),.rst(rst),.hi_valid(seq_hi_valid),.rx_hi(rx_seq_hi),
   .lo_valid(seq_lo_count_valid),.rx_lo(rx_seq_lo),.exp_hi({e3,e2,e1}),.exp_lo(e0),
-  .gate_in(gate_in),.accept(accept_fast),.packet_ok(packet_ok),.mismatch(mismatch));
+  .gate_in(gate_in),.accept(accept_fast),.packet_ok(packet_ok),.mismatch(mismatch),.decision_now(seq_decision_now));
 
  // Count and acceptance are registered together on the low-sequence beat.
  logic pending;logic[15:0] cq;logic okq;
@@ -113,7 +114,7 @@ module hft_mold_core_v17_17lane(
   if(rst)begin pending<=0;cq<=0;okq<=0;end
   else begin
    pending<=seq_lo_count_valid;
-   if(seq_lo_count_valid)begin cq<=msg_count;okq<=gate_in&~q.hi_bad&(rx_seq_lo==e0);end
+   if(seq_lo_count_valid)begin cq<=msg_count;okq<=seq_decision_now;end
   end
  end
  logic launch;assign launch=pending&okq&(cq!=0)&(cq!=16'hffff);
