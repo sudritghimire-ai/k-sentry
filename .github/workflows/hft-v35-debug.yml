@@ -1,0 +1,13 @@
+name: HFT v35 debug
+on:
+ workflow_dispatch:
+ push:
+  paths: ['tb_exact35_debug.sv','.github/workflows/hft-v35-debug.yml']
+jobs:
+ debug:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: iverilog -g2012 -o /tmp/dbg hft_exact_v35.sv tb_exact35_debug.sv && vvp /tmp/dbg
