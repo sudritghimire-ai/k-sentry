@@ -93,31 +93,41 @@ module packetfence2_jordan21_bench(
  (* keep *) logic[23:0] z2[0:16];
  logic[6:0] nmsg;
  integer i;
- logic[7:0] x,y;
 
  always_ff @(posedge clk) begin
   if(rst) begin
    nmsg<=0;overflow<=0;status<=0;
    for(i=0;i<17;i=i+1) begin z0[i]<=0;z1[i]<=0;z2[i]<=0; end
-  end else begin
-   if(pkt_start) begin
-    nmsg<=0;overflow<=0;
-    for(i=0;i<17;i=i+1) begin z0[i]<=0;z1[i]<=0;z2[i]<=0; end
+  end else if(pkt_start) begin
+   overflow<=(valid_count>2);
+   nmsg<=valid_count;
+   for(i=0;i<17;i=i+1) begin
+    if(valid_count==2) begin
+     // Starting from zero, apply x then y exactly.
+     z0[i] <= sem_x[i*8 +:8] + sem_y[i*8 +:8];
+     z1[i] <= sem_x[i*8 +:8];
+     z2[i] <= 0;
+    end else if(valid_count==1) begin
+     z0[i] <= sem_x[i*8 +:8];
+     z1[i] <= 0;
+     z2[i] <= 0;
+    end else begin
+     z0[i]<=0;z1[i]<=0;z2[i]<=0;
+    end
    end
-
+   status<=0;
+  end else begin
    if(valid_count!=0) begin
     if((nmsg+valid_count)>7'd64) overflow<=1;
     else begin
      nmsg<=nmsg+valid_count;
      for(i=0;i<17;i=i+1) begin
-      x=sem_x[i*8 +:8];
-      y=sem_y[i*8 +:8];
       if(valid_count==2) begin
-       z0[i] <= z0[i] + x + y;
-       z1[i] <= z1[i] + (z0[i]<<1) + x;
+       z0[i] <= z0[i] + sem_x[i*8 +:8] + sem_y[i*8 +:8];
+       z1[i] <= z1[i] + (z0[i]<<1) + sem_x[i*8 +:8];
        z2[i] <= z2[i] + (z1[i]<<1) + z0[i];
       end else begin
-       z0[i] <= z0[i] + x;
+       z0[i] <= z0[i] + sem_x[i*8 +:8];
        z1[i] <= z1[i] + z0[i];
        z2[i] <= z2[i] + z1[i];
       end
