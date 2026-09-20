@@ -15,9 +15,9 @@ module tb_seq_stream31;
  integer i,c,kind;
  task automatic send(input [63:0] seq,input[15:0] cnt,input logic sess,
   input logic wa,input logic wm,input logic ws,input logic we);
-  reg[63:0] before;
+  reg[63:0] prev_expected;
   begin
-   before=expected;
+   prev_expected=expected;
    @(negedge clk); hi_v=1;lo_v=0;rx_hi=seq[63:32];session_ok=sess;count=cnt;
    @(posedge clk);#0.1;
    @(negedge clk); hi_v=0;lo_v=1;rx_lo=seq[31:0];session_ok=sess;count=cnt;
@@ -33,8 +33,8 @@ module tb_seq_stream31;
    if(accept_fast||slow_required||eos) begin
     $display("STALE RESULT REPLAY i=%0d a/s/e=%b%b%b",i,accept_fast,slow_required,eos);$fatal(1);
    end
-   if(!wa && expected!==before) begin
-    $display("REJECT ADVANCED STATE i=%0d before=%h after=%h",i,before,expected);$fatal(1);
+   if(!wa && expected!==prev_expected) begin
+    $display("REJECT ADVANCED STATE i=%0d before=%h after=%h",i,prev_expected,expected);$fatal(1);
    end
   end
  endtask
