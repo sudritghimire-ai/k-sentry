@@ -1,0 +1,34 @@
+name: HFT complete v12
+on:
+  workflow_dispatch:
+  push:
+    paths: ['hft_complete_v12.sv','.github/workflows/hft-complete-v12.yml']
+jobs:
+  synth:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        top: [seq_update32x2_preinc, seq_update32x2_direct, complete_hft_preinc_bench, complete_hft_direct_bench]
+        freq: [300,333,350,375,400,425,450]
+        seed: [1,2,3,4,5]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with: { github-token: ${{ secrets.GITHUB_TOKEN }} }
+      - run: chmod +x synth_ecp5.sh
+      - name: P&R
+        continue-on-error: true
+        run: ./synth_ecp5.sh hft_complete_v12.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+      - name: Summary
+        if: always()
+        shell: bash
+        run: |
+          D="build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}"
+          echo "### ${{ matrix.top }} @ ${{ matrix.freq }} MHz seed ${{ matrix.seed }}" >> "$GITHUB_STEP_SUMMARY"
+          grep -E "Max frequency|logic, .* routing" "$D/nextpnr.log" | tail -12 >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v12-${{ matrix.top }}-${{ matrix.freq }}-${{ matrix.seed }}
+          path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
