@@ -1,0 +1,27 @@
+name: HFT real internal v27
+on:
+  workflow_dispatch:
+  push:
+    paths: ['hft_real_internal_v27.sv','.github/workflows/hft-real-internal-v27.yml']
+jobs:
+  timing:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        top: [hft_real_internal27_bench]
+        freq: [250,275,300,322,333,350,375,400]
+        seed: [1,2,3,4,5,6,7,8,9,10]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+      - run: chmod +x synth_ecp5.sh
+      - name: P&R
+        continue-on-error: true
+        run: ./synth_ecp5.sh "hft_real_v21.sv hft_real_internal_v27.sv" ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: realint27-${{ matrix.freq }}-${{ matrix.seed }}
+          path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
