@@ -1,0 +1,37 @@
+name: HFT Jordan attack
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'hft_jordan_v4.sv'
+      - '.github/workflows/hft-jordan.yml'
+jobs:
+  synth:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        top: [packetfence17_jordan_bench, hft_jordan_merged_bench]
+        freq: [300, 333, 400, 450, 500]
+        seed: [1,2,3,4,5]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: chmod +x synth_ecp5.sh
+      - name: Synthesize and place-route
+        continue-on-error: true
+        run: ./synth_ecp5.sh hft_jordan_v4.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+      - name: Summary
+        if: always()
+        shell: bash
+        run: |
+          D="build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}"
+          echo "### ${{ matrix.top }} @ ${{ matrix.freq }} MHz seed ${{ matrix.seed }}" >> "$GITHUB_STEP_SUMMARY"
+          grep -E "Max frequency|logic, .* routing" "$D/nextpnr.log" | tail -10 >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jordan-${{ matrix.top }}-${{ matrix.freq }}-${{ matrix.seed }}
+          path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
