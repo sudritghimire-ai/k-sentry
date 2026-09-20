@@ -142,7 +142,7 @@ module tb_hft_stress_v21;
       end else if(kind==1) begin // gap
         seq_case(ref_expected+64'd7,16'd1,1,0,1,0);
       end else if(kind==2) begin // stale/duplicate
-        seq_case((ref_expected==0)?0:ref_expected-1,16'd1,1,0,1,0);
+        seq_case(ref_expected-64'd1,16'd1,1,0,1,0);
       end else if(kind==3) begin // wrong session
         seq_case(ref_expected,16'd1,0,0,1,0);
       end else if(kind==4) begin // EOS
