@@ -1,0 +1,30 @@
+name: HFT same-cycle equality v18
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'hft_eq_v18.sv'
+      - '.github/workflows/hft-eq-v18.yml'
+jobs:
+  synth:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        top: [baseline64_order18, eq64_flat18, eq64_tree16_18, eq64_tree8_18, eq64_xor_tree18]
+        freq: [225,250,275,300,333]
+        seed: [1,2,3,4,5,6]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: chmod +x synth_ecp5.sh
+      - name: P&R
+        continue-on-error: true
+        run: ./synth_ecp5.sh hft_eq_v18.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eq18-${{ matrix.top }}-${{ matrix.freq }}-${{ matrix.seed }}
+          path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
