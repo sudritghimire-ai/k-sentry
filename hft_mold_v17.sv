@@ -86,7 +86,7 @@ module pf_csa54_lane17(
   else begin
    if(pkt_start)fresh<=1;
    if(valid)begin
-    if(fresh)begin s0<={{16{1'b0}},x};c0<=0;s1<=0;c1<=0;s2<=0;c2<=0;fresh<=0;end
+    if(fresh|pkt_start)begin s0<={{16{1'b0}},x};c0<=0;s1<=0;c1<=0;s2<=0;c2<=0;fresh<=0;end
     else begin s0<=ns0;c0<=nc0;s1<=ns1;c1<=nc1;s2<=ns2;c2<=nc2;end
    end
   end
