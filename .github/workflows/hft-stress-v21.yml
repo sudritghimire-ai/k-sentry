@@ -1,0 +1,15 @@
+name: HFT v21 stress
+on:
+  workflow_dispatch:
+  push:
+    paths: ['tb_hft_stress_v21.sv','.github/workflows/hft-stress-v21.yml']
+jobs:
+  stress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+      - run: iverilog -g2012 -o hftstress hft_real_v21.sv tb_hft_stress_v21.sv
+      - run: vvp hftstress
