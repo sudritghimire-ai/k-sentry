@@ -40,7 +40,11 @@ module hft_fields20_bench #(
   // Rare background refresh of H+1 after a carry.
   typedef enum logic[1:0] {P_IDLE,P_L1,P_L2} pst_t;
   pst_t pst;
-  logic [16:0] p_inc;
+  logic [16:0] ph0_inc,ph1_inc;
+  always_comb begin
+    ph0_inc={1'b0,ph0}+17'd1;
+    ph1_inc={1'b0,ph1}+17'd1;
+  end
 
   integer i;
   (* keep *) logic [12:0] z0[0:16];
@@ -70,9 +74,8 @@ module hft_fields20_bench #(
               if(pst==P_IDLE) begin
                 eh0<=ph0;eh1<=ph1;eh2<=ph2;
                 // Begin background refresh: P := old P + 1.
-                p_inc={1'b0,ph0}+17'd1;
-                ph0<=p_inc[15:0];
-                if(p_inc[16]) pst<=P_L1;
+                ph0<=ph0_inc[15:0];
+                if(ph0_inc[16]) pst<=P_L1;
               end else begin
                 // Cannot consume a second high carry before refresh completes.
                 slow_required<=1;
@@ -91,9 +94,8 @@ module hft_fields20_bench #(
 
       // Background high+1 refresh, rare and off common path.
       if(pst==P_L1) begin
-        p_inc={1'b0,ph1}+17'd1;
-        ph1<=p_inc[15:0];
-        if(p_inc[16]) pst<=P_L2; else pst<=P_IDLE;
+        ph1<=ph1_inc[15:0];
+        if(ph1_inc[16]) pst<=P_L2; else pst<=P_IDLE;
       end else if(pst==P_L2) begin
         ph2<=ph2+16'd1;
         pst<=P_IDLE;
