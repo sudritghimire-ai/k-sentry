@@ -1,3 +1,4 @@
+// trigger synthesis sweep
 // HFT fast-path v5: fixed two-beat 64-bit sequence checker + Jordan PacketFence.
 // Dedicated normalized sequence extractor supplies first/second 32-bit halves on consecutive seq_valid cycles.
 
