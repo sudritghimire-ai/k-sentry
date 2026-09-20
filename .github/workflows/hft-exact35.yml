@@ -1,0 +1,30 @@
+name: HFT exact chunked v35
+on:
+ workflow_dispatch:
+ push:
+  paths: ['hft_exact_v35.sv','tb_exact35.sv','.github/workflows/hft-exact35.yml']
+jobs:
+ sim:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: iverilog -g2012 -o /tmp/tb hft_exact_v35.sv tb_exact35.sv && vvp /tmp/tb
+ timing:
+  needs: sim
+  runs-on: ubuntu-latest
+  strategy:
+   fail-fast: false
+   matrix:
+    top: [seq_chunk16_exact35,hft_exact35_jordan_bench]
+    freq: [300,333,350,375,400,425,450,500]
+    seed: [1,2,3,4,5,6,7,8,9,10]
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: chmod +x synth_ecp5.sh
+   - name: P&R
+     continue-on-error: true
+     run: ./synth_ecp5.sh hft_exact_v35.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
