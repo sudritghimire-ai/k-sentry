@@ -1,0 +1,30 @@
+name: HFT precomputed v34
+on:
+ workflow_dispatch:
+ push:
+  paths: ['hft_precompute_v34.sv','tb_precompute34.sv','.github/workflows/hft-precompute34.yml']
+jobs:
+ sim:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: iverilog -g2012 -o /tmp/tb hft_precompute_v34.sv tb_precompute34.sv && vvp /tmp/tb
+ timing:
+  needs: sim
+  runs-on: ubuntu-latest
+  strategy:
+   fail-fast: false
+   matrix:
+    top: [seq_precompute34,hft_precompute_jordan34_bench]
+    freq: [300,333,350,375,400,425,450,500]
+    seed: [1,2,3,4,5,6,7,8,9,10]
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: chmod +x synth_ecp5.sh
+   - name: P&R
+     continue-on-error: true
+     run: ./synth_ecp5.sh hft_precompute_v34.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
