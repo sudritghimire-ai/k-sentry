@@ -1,0 +1,30 @@
+name: HFT streamed last-count v33
+on:
+ workflow_dispatch:
+ push:
+  paths: ['hft_stream_lastcount_v33.sv','tb_stream33.sv','.github/workflows/hft-stream33.yml']
+jobs:
+ sim:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: iverilog -g2012 -o /tmp/tb hft_stream_lastcount_v33.sv tb_stream33.sv && vvp /tmp/tb
+ timing:
+  needs: sim
+  runs-on: ubuntu-latest
+  strategy:
+   fail-fast: false
+   matrix:
+    top: [seq_stream_lastcount33,hft_stream_lastcount_jordan33_bench]
+    freq: [300,333,350,375,400,425,450,500]
+    seed: [1,2,3,4,5,6,7,8,9,10]
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: chmod +x synth_ecp5.sh
+   - name: P&R
+     continue-on-error: true
+     run: ./synth_ecp5.sh hft_stream_lastcount_v33.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
