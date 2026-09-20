@@ -86,12 +86,12 @@ module tb_hft_stress_v21;
       swap_pos=(packet_id*5+9)%63;
 
       case(fault_kind)
-        1: msgsB[pos1][7:0] ^= 8'h01;                              // 1 substitution
-        2: begin msgsB[pos1][7:0] ^= 8'h03; msgsB[pos2][15:8] ^= 8'h05; end
+        1: msgsB[pos1][7:0] = msgsB[pos1][7:0] ^ 8'h01;                              // 1 substitution
+        2: begin msgsB[pos1][7:0] = msgsB[pos1][7:0] ^ 8'h03; msgsB[pos2][15:8] = msgsB[pos2][15:8] ^ 8'h05; end
         3: begin msgsB[pos1][7:0] ^= 8'h03; msgsB[pos2][15:8] ^= 8'h05;
-                 msgsB[pos3][23:16] ^= 8'h09; end
+                 msgsB[pos3][23:16] = msgsB[pos3][23:16] ^ 8'h09; end
         4: begin // adjacent transposition; force distinct if necessary
-             if(msgsB[swap_pos]===msgsB[swap_pos+1]) msgsB[swap_pos][7:0]^=8'h80;
+             if(msgsB[swap_pos]===msgsB[swap_pos+1]) msgsB[swap_pos][7:0] = msgsB[swap_pos][7:0] ^ 8'h80;
              bx=msgsB[swap_pos]; msgsB[swap_pos]=msgsB[swap_pos+1]; msgsB[swap_pos+1]=bx;
            end
         default: ;
