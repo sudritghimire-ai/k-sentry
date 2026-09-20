@@ -1,0 +1,35 @@
+name: HFT streamed sequence v31
+on:
+  workflow_dispatch:
+  push:
+    paths: ['hft_seq_v31.sv','tb_seq_stream31.sv','.github/workflows/hft-seq-v31.yml']
+jobs:
+  sim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+      - run: iverilog -g2012 -o seq31sim hft_seq_v31.sv tb_seq_stream31.sv
+      - run: vvp seq31sim
+  timing:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        top: [seq_stream31_bench]
+        freq: [225,250,275,300,333,350,375,400]
+        seed: [1,2,3,4,5,6,7,8,9,10]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+      - run: chmod +x synth_ecp5.sh
+      - name: P&R
+        continue-on-error: true
+        run: ./synth_ecp5.sh hft_seq_v31.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seqv31-${{ matrix.freq }}-${{ matrix.seed }}
+          path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
