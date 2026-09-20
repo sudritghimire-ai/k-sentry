@@ -1,0 +1,27 @@
+name: HFT polyphase v22
+on:
+ workflow_dispatch:
+ push:
+  paths: ['hft_polyphase_v22.sv','.github/workflows/hft-polyphase-v22.yml']
+jobs:
+ timing:
+  runs-on: ubuntu-latest
+  strategy:
+   fail-fast: false
+   matrix:
+    top: [seq_stage22_bench, packetfence2_phase22_bench, hft_hot22_bench]
+    freq: [300,322,333,350,375,400]
+    seed: [1,2,3,4,5]
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: chmod +x synth_ecp5.sh
+   - name: P&R
+     continue-on-error: true
+     run: ./synth_ecp5.sh hft_polyphase_v22.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+   - uses: actions/upload-artifact@v4
+     if: always()
+     with:
+      name: polyv22-${{ matrix.top }}-${{ matrix.freq }}-${{ matrix.seed }}
+      path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
