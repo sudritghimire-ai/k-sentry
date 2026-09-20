@@ -15,7 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: YosysHQ/setup-oss-cad-suite@v4
-        with: { github-token: ${{ secrets.GITHUB_TOKEN }} }
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: chmod +x synth_ecp5.sh
       - name: P&R
         continue-on-error: true
