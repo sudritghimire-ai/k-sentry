@@ -1,0 +1,36 @@
+name: HFT real v21
+on:
+ workflow_dispatch:
+ push:
+  paths: ['hft_real_v21.sv','tb_hft_real_v21.sv','.github/workflows/hft-real-v21.yml']
+jobs:
+ sim:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: iverilog -g2012 -o hftv21_sim hft_real_v21.sv tb_hft_real_v21.sv
+   - run: vvp hftv21_sim
+   - run: yosys -q -p "read_verilog -sv hft_real_v21.sv; prep -top hft_hotpair21_bench; check"
+ timing:
+  runs-on: ubuntu-latest
+  strategy:
+   fail-fast: false
+   matrix:
+    top: [seq_hoist21_bench, packetfence2_jordan21_bench, hft_hotpair21_bench]
+    freq: [300,322,333,350,375,400]
+    seed: [1,2,3,4,5]
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: chmod +x synth_ecp5.sh
+   - name: P&R
+     continue-on-error: true
+     run: ./synth_ecp5.sh hft_real_v21.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+   - uses: actions/upload-artifact@v4
+     if: always()
+     with:
+      name: realv21-${{ matrix.top }}-${{ matrix.freq }}-${{ matrix.seed }}
+      path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
