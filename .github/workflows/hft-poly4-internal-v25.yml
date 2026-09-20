@@ -1,0 +1,27 @@
+name: HFT internal four-way v25i
+on:
+ workflow_dispatch:
+ push:
+  paths: ['hft_poly4_internal_v25.sv','.github/workflows/hft-poly4-internal-v25.yml']
+jobs:
+ timing:
+  runs-on: ubuntu-latest
+  strategy:
+   fail-fast: false
+   matrix:
+    top: [packetfence4_internal25i_bench]
+    freq: [322,333,350,375,400,450,500]
+    seed: [1,2,3,4,5,6,7,8,9,10]
+  steps:
+   - uses: actions/checkout@v5
+   - uses: YosysHQ/setup-oss-cad-suite@v4
+     with: {github-token: "${{ secrets.GITHUB_TOKEN }}"}
+   - run: chmod +x synth_ecp5.sh
+   - name: P&R
+     continue-on-error: true
+     run: ./synth_ecp5.sh hft_poly4_internal_v25.sv ${{ matrix.top }} ${{ matrix.freq }} ${{ matrix.seed }}
+   - uses: actions/upload-artifact@v4
+     if: always()
+     with:
+      name: poly4i-${{ matrix.freq }}-${{ matrix.seed }}
+      path: build/${{ matrix.top }}_${{ matrix.freq }}_${{ matrix.seed }}
